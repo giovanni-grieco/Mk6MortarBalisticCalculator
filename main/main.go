@@ -26,7 +26,16 @@ func (d *tableData) Length() (int, int) {
 func (d *tableData) GetValue(row, col int) string {
 	switch row {
 	case 0:
-		return fmt.Sprintf("%.2f m/s", d.velocities[col])
+		if col == 0 {
+			return fmt.Sprintf("Close (%.0f m/s)", d.velocities[col])
+		}
+		if col == 1 {
+			return fmt.Sprintf("Medium (%.0f m/s)", d.velocities[col])
+		}
+		if col == 2 {
+			return fmt.Sprintf("Far (%.0f m/s)", d.velocities[col])
+		}
+		return ""
 	case 1:
 		return fmt.Sprintf("%.2f °", d.positiveDegrees[col])
 	case 2:
@@ -52,7 +61,7 @@ func main() {
 	a := app.New()
 	w := a.NewWindow("Ballistics Calculator Mk6 Mortar")
 
-	w.Resize(fyne.NewSize(320, 400))
+	w.Resize(fyne.NewSize(470, 400))
 
 	targetDistanceLabel := widget.NewLabel("Target Distance")
 	targetDistanceEntry := widget.NewEntry()
@@ -64,7 +73,7 @@ func main() {
 		func() (int, int) { return data.Length() },
 		func() fyne.CanvasObject {
 			label := widget.NewLabel("")
-			label.Resize(fyne.NewSize(100, 100))
+			label.Resize(fyne.NewSize(150, 100))
 			return label
 		},
 		func(i widget.TableCellID, o fyne.CanvasObject) {
@@ -73,7 +82,7 @@ func main() {
 	)
 
 	for i := 0; i < 3; i++ {
-		table.SetColumnWidth(i, 100)
+		table.SetColumnWidth(i, 150)
 	}
 
 	process := func() {
