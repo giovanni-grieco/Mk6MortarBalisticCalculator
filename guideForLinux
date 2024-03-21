@@ -1,0 +1,3 @@
+following libraries are needed (currently on fedora):
+sudo dnf install libfl*
+sudo dnf install libXx*
